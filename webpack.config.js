@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
+const cssnano = require("cssnano");
 
 module.exports = {
   entry: "./src/index.js",
@@ -28,6 +29,13 @@ module.exports = {
                 plugins: () => [
                   autoprefixer({
                     grid: "autoplace"
+                  }),
+                  cssnano({
+                    preset: ['default', {
+                      discardComments: {
+                        removeAll: true,
+                      },
+                    }]
                   })
                 ]
               }
@@ -37,6 +45,10 @@ module.exports = {
             }
           ]
         })
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: "file-loader?name=/public/icons/[name].[ext]"
       },
       {
         test: /\.js$/,
