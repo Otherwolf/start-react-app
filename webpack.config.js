@@ -9,7 +9,8 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/public"),
-    filename: "js/index.js"
+    filename: "js/index.js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -20,7 +21,7 @@ module.exports = {
           use: [{
               loader: "css-loader",
               options: {
-                url: false
+                url: true
               }
             },
             {
@@ -47,8 +48,17 @@ module.exports = {
         })
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: "file-loader?name=/public/icons/[name].[ext]"
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: "[name].[ext]",
+              outputPath: "img",
+              useRelativePath: true,
+            }
+          }
+        ]
       },
       {
         test: /\.js$/,
