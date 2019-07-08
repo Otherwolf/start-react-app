@@ -10,7 +10,6 @@ module.exports = {
   output: {
     path: path.join(__dirname, "/public"),
     filename: "js/index.js",
-    publicPath: "/"
   },
   module: {
     rules: [
@@ -55,7 +54,32 @@ module.exports = {
             options: {
               name: "[name].[ext]",
               outputPath: "img",
+              publicPath: "../img",
               useRelativePath: true,
+            }
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                enabled: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75
+              }
             }
           }
         ]
@@ -74,7 +98,7 @@ module.exports = {
       template: "./src/index.html"
     }),
     new ExtractTextPlugin({
-      filename: "./css/style.css",
+      filename: "css/style.css",
       allChunks: true,
     })
   ],
